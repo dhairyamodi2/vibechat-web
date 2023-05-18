@@ -1,12 +1,14 @@
 import Image from "next/image";
 import { AuthForm } from "./components/AuthForm";
-
+import Link from "next/link";
 export const metadata = {
   title: `Vibechat`,
   description: `Vibechat`,
 };
 
 export default function Home() {
+    // const router = useRouter();
+
   return (
     <div
       className="
@@ -27,7 +29,7 @@ export default function Home() {
            sm:max-w-md
            " // why
       >
-        <Image alt="logo" width={52} height={52} className="mx-auto w-auto" src={'/vibechat.png'}/>
+        <Link href={'/'}><Image alt="logo" width={52} height={52} className="mx-auto w-auto" src={'/vibechat.png'}/></Link>
 
         <h2 className="mt-3 text-center text-2xl font-bold">
             Sign in to your account
