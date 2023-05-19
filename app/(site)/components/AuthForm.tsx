@@ -11,7 +11,7 @@ import { useState } from "react";
 export const AuthForm = function () {
     const [authType, setAuthType] = useState<'login' | 'register'>('login')
     return (
-        <div className="sm : mx-auto sm: w-full sm : max-w-md mt-6">
+        <div className="sm : mx-auto sm: w-full sm : max-w-md mt-6 ">
             <div
                 className="
               bg-white
