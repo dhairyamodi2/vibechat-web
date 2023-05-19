@@ -3,3 +3,10 @@ export interface AuthPostFields {
     email: string;
     password: string;
 }
+
+
+export interface ResponseType<T> {
+    success: boolean;
+    message: string;
+    data: T | null
+}

@@ -12,11 +12,12 @@ import {
     useState
 } from "react";
 import {AuthPostFields} from "@/app/types/types";
-import {registerUser} from "@/app/services/auth";
+import {registerUser, signInUser, socialAuth} from "@/app/services/auth";
+
 
 export const AuthForm = function () {
     const [authType, setAuthType] = useState<'login' | 'register'>('login')
-
+    const [loading, setLoading] = useState(false);
     const [postFields, setPostFields] = useState<AuthPostFields>({
         name : '',
         email: '',
@@ -34,9 +35,21 @@ export const AuthForm = function () {
     const handleSign : FormEventHandler<HTMLFormElement> = async function(e) {
         e.preventDefault();
         if(authType === 'register') {
-            registerUser(postFields);
+            registerUser(postFields, setLoading);
+        }
+        if(authType === 'login') {
+            signInUser(postFields, setLoading);
         }
     }
+
+    const handleGithub = function() {
+        socialAuth('github')
+    }
+
+    const handleGoogle = function() {
+        socialAuth('google')
+    }
+
     return (
         <div className="sm : mx-auto sm: w-full sm : max-w-md mt-6 ">
             <div
@@ -81,7 +94,7 @@ export const AuthForm = function () {
                         required={true}
                         leftIcon={<RiLockPasswordLine />}
                     />
-                    <Button onClick={()=> {}} fullwidth={true}>{authType == 'login' ? 'Sign In' : 'Sign Out'}</Button>
+                    <Button onClick={()=> {}} fullwidth={true} disabled={loading}>{loading ? "Loading..." : authType == 'login' ? 'Sign In' : 'Sign Out'}</Button>
                 </form>
                 <div className="mt-5">
                     <div className="relative">
@@ -97,8 +110,8 @@ export const AuthForm = function () {
                 </div>
 
                 <div className="flex items-center">
-                    <SocialButtons><AiFillFacebook className="text-2xl" /></SocialButtons>
-                    <SocialButtons><AiFillGoogleCircle className="text-2xl" /></SocialButtons>
+                    <SocialButtons onClick={handleGithub}><AiFillFacebook className="text-2xl" /></SocialButtons>
+                    <SocialButtons onClick={handleGoogle}><AiFillGoogleCircle className="text-2xl" /></SocialButtons>
                 </div>
 
                 <div className="flex justify-center text-sm mt-3 text-gray-400">
