@@ -1,12 +1,21 @@
-import { ReactNode } from 'react';
+import {
+    ChangeEvent,
+    ChangeEventHandler,
+    Dispatch,
+    ReactNode,
+    SetStateAction
+} from 'react';
 import { IconType } from 'react-icons';
 import {AiOutlineMail} from 'react-icons/ai'
+import {AuthPostFields} from "@/app/types/types";
+
 interface InputProps {
     label: string;
     required? : boolean;
     disabled : boolean;
     name: string;
-    onChange : () => void;
+    onChange: ChangeEventHandler<HTMLInputElement>
+    value: string;
     id : string;
     type : 'text' | 'password' | 'email' | 'number',
     leftIcon: ReactNode
@@ -36,7 +45,7 @@ export const Input : React.FC<InputProps> = function (
                 focus:ring-2
                 sm: text-sm
                 focus:ring-purple-400' 
-                type={type} name={name} onChange={onChange} placeholder={label}>
+                type={type} name={name} onChange={onChange} placeholder={label} required={required}>
             </input>
         </div>
     )

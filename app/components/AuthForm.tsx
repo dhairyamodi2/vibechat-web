@@ -5,11 +5,38 @@ import { RiLockPasswordLine } from 'react-icons/ri'
 import { Input } from "./input/Input";
 import { Button } from "./input/Button";
 import { SocialButtons } from "./auth/SocialButtons";
-import { useState } from "react";
-
+import {
+    ChangeEvent,
+    FormEventHandler,
+    MouseEventHandler,
+    useState
+} from "react";
+import {AuthPostFields} from "@/app/types/types";
+import {registerUser} from "@/app/services/auth";
 
 export const AuthForm = function () {
     const [authType, setAuthType] = useState<'login' | 'register'>('login')
+
+    const [postFields, setPostFields] = useState<AuthPostFields>({
+        name : '',
+        email: '',
+        password: ''
+    })
+    function handleChange(e : ChangeEvent<HTMLInputElement>){
+        setPostFields((prevState) => {
+            return {
+                ...prevState,
+                [e.target.name] : e.target.value
+            }
+        })
+    }
+
+    const handleSign : FormEventHandler<HTMLFormElement> = async function(e) {
+        e.preventDefault();
+        if(authType === 'register') {
+            registerUser(postFields);
+        }
+    }
     return (
         <div className="sm : mx-auto sm: w-full sm : max-w-md mt-6 ">
             <div
@@ -20,14 +47,15 @@ export const AuthForm = function () {
               shadow
               sm: rounded-lg"
             >
-                <form>
+                <form onSubmit={handleSign}>
                     {authType === 'register' && <Input
                         disabled={false}
                         id="name-field"
                         name="name"
                         label="Name"
-                        onChange={() => console.log("print")}
+                        onChange={handleChange}
                         type="text"
+                        value={postFields.name}
                         required={true}
                         leftIcon={<AiOutlineUser />}
                     />}
@@ -36,8 +64,9 @@ export const AuthForm = function () {
                         id="email-field"
                         name="email"
                         label="Email"
-                        onChange={() => console.log("print")}
+                        onChange={handleChange}
                         type="email"
+                        value={postFields.email}
                         required={true}
                         leftIcon={<AiOutlineMail />}
                     />
@@ -46,12 +75,13 @@ export const AuthForm = function () {
                         id="password-field"
                         name="password"
                         label="Password"
-                        onChange={() => console.log("print")}
+                        value={postFields.password}
+                        onChange={handleChange}
                         type="password"
                         required={true}
                         leftIcon={<RiLockPasswordLine />}
                     />
-                    <Button onClick={() => { }} fullwidth={true}>{authType == 'login' ? 'Sign In' : 'Sign Out'}</Button>
+                    <Button onClick={()=> {}} fullwidth={true}>{authType == 'login' ? 'Sign In' : 'Sign Out'}</Button>
                 </form>
                 <div className="mt-5">
                     <div className="relative">

@@ -1,9 +1,9 @@
-import { ReactNode } from "react";
+import {MouseEventHandler, ReactNode} from "react";
 
 interface ButtonProps {
     children: ReactNode
     fullwidth? : true | false
-    onClick: () => void;
+    onClick: MouseEventHandler<HTMLButtonElement>
 
 }
 export const Button : React.FC<ButtonProps>= function({children, onClick, fullwidth}) {
