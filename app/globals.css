@@ -14,3 +14,21 @@ html, body, :root {
   top: 40%;
   left :45%;
 }
+
+.sidebar{
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media screen and (min-width: 800px) {
+  .sidebar {
+   grid-template-columns: 1fr 2fr;
+  }
+}
+
+@media screen and (min-width: 1300px) {
+   .sidebar {
+    grid-template-columns: 1fr 3fr
+   }
+}
+
