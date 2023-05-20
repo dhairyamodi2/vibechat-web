@@ -8,7 +8,7 @@ import Github from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
 
 
-export const authOptions : AuthOptions = {
+const authOptions : AuthOptions = {
     adapter: PrismaAdapter(prisma),
     providers: [
         Google({

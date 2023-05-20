@@ -2,9 +2,6 @@ import {AuthPostFields, ResponseType} from "@/app/types/types";
 import {http} from "@/app/libs/http";
 import toast from "react-hot-toast";
 import {Dispatch, SetStateAction} from "react";
-import {
-    tsTryParseClassMemberWithIsStatic
-} from "sucrase/dist/types/parser/plugins/typescript";
 import {signIn} from "next-auth/react";
 
 
@@ -52,7 +49,6 @@ export const signInUser = async function(postFields : AuthPostFields, setLoading
 export const socialAuth = async function(action: string) {
     try{
         const payload = await signIn(action, {redirect: false});
-        alert(JSON.stringify(payload))
         if(payload?.error){
             toast.error('Invalid Credentials');
             // return;
