@@ -7,10 +7,6 @@ export default function Sidebar({ children }: { children: ReactNode }) {
         <div className="p-3 md:p-1 lg:p-2  m-1">
             <Navbar />
             <div className="mt-8 mx-3">
-                <Contact />
-                <Contact />
-                <Contact />
-                <Contact />
                 {children}
             </div>
         </div>

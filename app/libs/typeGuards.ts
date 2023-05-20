@@ -1,3 +1,5 @@
+import { User } from "@prisma/client";
+
 export function isValidBody<T extends Record<string, unknown>>(
     body: any,
     fields: (keyof T)[],
@@ -16,4 +18,12 @@ export function isValidBody<T extends Record<string, unknown>>(
     console.log(message)
     if(message.length === 0) return true;
     return false;
+}
+
+
+export type NewChat = {
+    isGroup?: boolean;
+    userId? : string;
+    name?: string;
+    members? : Array<User>
 }
