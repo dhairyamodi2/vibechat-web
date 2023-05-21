@@ -14,8 +14,8 @@ export const Contact : React.FC<ContactProps> = function({user}) {
     const router = useRouter()
     const handleClick = useCallback(async () => {
         const data = await StartChat(user, false, [], user.id, null)
-        if(data && data.success === true) {
-            router.push(`/chats/${user.id}`)
+        if(data != null && data.data != null && data.success === true) {
+            router.push(`/chats/${data.data.id}`)
         }
     }, [user, router])
     return (

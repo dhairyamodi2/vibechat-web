@@ -1,9 +1,14 @@
+import { getChatsById } from "@/app/services/server-side/getChatsById";
 import Image from "next/image";
 
-export default function Chat() {
-    return (
-        <div className="h-full sm: hidden md:block">
-            <div className="bg-gray-100 h-full flex items-center mx-auto w-full justify-center">
+
+export default async function Chat({params} : {params : {chatId: Array<string>}}) {
+    console.log(params.chatId);
+    const chat = await getChatsById(params.chatId);
+    if(!chat) {
+        return (
+            <div className="h-full sm: hidden md:block border-l-2">
+                 <div className="bg-gray-100 h-full flex items-center mx-auto w-full justify-center">
                 <div>
                     <Image
                         alt="logo"
@@ -12,9 +17,15 @@ export default function Chat() {
                         className="mx-auto w-auto my-3 "
                         src={"/vibechat.png"}
                     />
-                    <span className="text-lg text-bold">This is different</span>
+                    <span className="text-lg text-bold">These are chats</span>
                 </div>
             </div>
+            </div>
+        )
+    }
+    return (
+        <div className="h-full sm:hidden md:block border-l-2">
+            
         </div>
     )
 }
