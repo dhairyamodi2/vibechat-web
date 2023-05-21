@@ -6,6 +6,15 @@ html, body, :root {
   height: 100%;
   font-family: 'Ubuntu', Verdana, Geneva, Tahoma, sans-serif;
 }
+
+body::-webkit-scrollbar, .message-section::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
 .loader {
   display: flex;
   flex-direction: column;

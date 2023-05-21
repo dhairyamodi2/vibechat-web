@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 export const Message = function ({ message }: { message: MessageType }) {
     const session = useSession();
     return (
-        <div className="p-4">
+        <div className="px-4 pt-3 sm:pb-4">
             <div className="">
                 <div className={`flex items-start ${session.data?.user?.email === message.senderId ? 'justify-end' : ''}`}>
                     {session.data?.user?.email !== message.senderId &&
@@ -20,7 +20,7 @@ export const Message = function ({ message }: { message: MessageType }) {
                             <span className="font-bold text-md">Radhu</span>
                             <span className="text-sm px-2">11:10</span>
                         </div>
-                        <div className={`${session.data?.user?.email === message.senderId ? 'bg-purple-600 text-white' : 'bg-gray-200'}  p-4 my-2 ml-2 rounded-2xl flex justify-center max-w-sm w-auto text-md`}>
+                        <div className={`${session.data?.user?.email === message.senderId ? 'bg-purple-600 text-white' : 'bg-gray-200'}  p-4 my-2 ml-2 rounded-2xl flex justify-center max-w-xs md:max-w-sm w-auto text-md break-all`}>
                             {message.body}
                         </div>
 

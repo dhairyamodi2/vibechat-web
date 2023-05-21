@@ -2,6 +2,8 @@ import { getChatsById } from "@/app/services/server-side/getChatsById";
 import Image from "next/image";
 import { Header } from "./components/Header";
 import { Messages } from "./components/Messages";
+import { MessageForm } from "./components/MessageForm";
+import { useRef } from "react";
 
 
 export default async function Chat({params} : {params : {chatId: Array<string>}}) {
@@ -9,7 +11,7 @@ export default async function Chat({params} : {params : {chatId: Array<string>}}
     const chat = await getChatsById(params.chatId);
     if(!chat) {
         return (
-            <div className="h-full sm: hidden md:block border-l-2">
+            <div className="h-full sm:hidden md:block border-l-2">
                  <div className="bg-gray-100 h-full flex items-center mx-auto w-full justify-center">
                 <div>
                     <Image
@@ -26,9 +28,14 @@ export default async function Chat({params} : {params : {chatId: Array<string>}}
         )
     }
     return (
-        <div className="sm:hidden md:block border-l-2 flex h-screen">
+        <div className="sm:hidden md:block border-l-2 h-screen">
             <Header chat={chat}></Header>
+            {/* <div> */}
             <Messages chat={chat} />
+            {/* </div> */}
+            
+            <MessageForm />
+            
         </div>
     )
 }
