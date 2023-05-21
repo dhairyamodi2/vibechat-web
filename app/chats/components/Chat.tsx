@@ -18,7 +18,7 @@ export const ChatBox : React.FC<ChatProps> = function( {chat}) {
     router.push(`/chats/${chat.id}`)
     }, [router, chat])
     return (
-        <div className={`${params && params.chatId ? 'hidden p-0 my-0' : ''} p-2 flex items-center my-3 rounded-xl ${params.chatId === chat.id ? 'bg-gray-200' : ''} hover:bg-gray-200 flex-1 cursor-pointer`} onClick={handleClick}>
+        <div className={`${params && params.chatId ? 'hidden p-0 my-0 sm:flex' : ''} p-2 flex items-center my-3 rounded-xl ${params.chatId === chat.id ? 'bg-gray-200' : ''} hover:bg-gray-200 flex-1 cursor-pointer`} onClick={handleClick}>
             <Avatar src={`${recipent?.image ? recipent.image : '/avatar.png'}`}></Avatar>
             <div className="flex-1 mx-3 my-1">
                 <div className="flex flex-col">

@@ -22,7 +22,7 @@ export const Navbar = function () {
         //     </div>
         // </div>
 
-        <div className={`${params && params.chatId ? 'hidden' : ''} flex justify-between items-center p-6 bg-gray-200 m-0`}>
+        <div className={`${params && params.chatId ? 'hidden sm:flex' : ''} flex justify-between items-center p-6 bg-gray-200 m-0`}>
             <Image alt="profile" src={'/vibechat.png'} width={35} height={35} className="rounded-3xl"></Image>
             <div className="p-1 mx-1 w-full text-2xl md:text-lg text-center md:text-left"><span className="mx-1">Users</span></div>
 
