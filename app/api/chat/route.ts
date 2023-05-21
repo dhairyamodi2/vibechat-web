@@ -1,5 +1,5 @@
 import { NewChat } from "@/app/libs/typeGuards";
-import { getCurrentUser } from "@/app/services/getCurrentUser";
+import { getCurrentUser } from "@/app/services/server-side/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from '@/app/libs/ormconfig';
 

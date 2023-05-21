@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import Sidebar from "../components/sidebar/Sidebar";
-import { getUsers } from "../services/users";
+import { getUsers } from "../services/server-side/users";
 import { Contact } from "./components/Contact";
 
 export default async function UsersLayout({
