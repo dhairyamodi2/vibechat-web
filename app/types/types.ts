@@ -14,10 +14,16 @@ export interface ResponseType<T> {
 }
 
 
-export type ChatType =  Chat & {
+export type ChatType = Chat & {
     users: User[];
     messages: (Message & {
         sender: User;
         seen: User[];
     })[];
+}
+
+
+export type MessageType = Message & {
+    sender: User;
+    seen : User[]
 }

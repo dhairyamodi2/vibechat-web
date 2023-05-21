@@ -1,5 +1,7 @@
 import { getChatsById } from "@/app/services/server-side/getChatsById";
 import Image from "next/image";
+import { Header } from "./components/Header";
+import { Messages } from "./components/Messages";
 
 
 export default async function Chat({params} : {params : {chatId: Array<string>}}) {
@@ -24,8 +26,9 @@ export default async function Chat({params} : {params : {chatId: Array<string>}}
         )
     }
     return (
-        <div className="h-full sm:hidden md:block border-l-2">
-            
+        <div className="sm:hidden md:block border-l-2 flex h-screen">
+            <Header chat={chat}></Header>
+            <Messages chat={chat} />
         </div>
     )
 }
