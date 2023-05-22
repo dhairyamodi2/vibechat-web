@@ -28,7 +28,7 @@ export default async function Chat({params} : {params : {chatId: Array<string>}}
         )
     }
     return (
-        <div className="flex flex-col border-l-2 messages h-full">
+        <div className="flex flex-col border-l-2 messages h-full absolute w-full top-0 sm:relative">
             <Header chat={chat}></Header>
             {/* <div> */}
             <Messages chat={chat} />

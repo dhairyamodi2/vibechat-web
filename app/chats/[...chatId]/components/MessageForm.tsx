@@ -19,11 +19,11 @@ export const MessageForm =  function () {
         http.post('/api/messages', JSON.stringify({chatId: chatId, body: messageText}))
     }
     return (
-        <div className="mt-3">
+        <div className="mt-3 mb-3">
             <div className='flex flex-col'>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center text-xl">
                 <BsImage className='text-purple-600 mx-2' size={25}></BsImage>
-                <input type='text' className='placeholder:text-sm bg-gray-100 p-2 rounded-lg flex-1 focus:border-none focus:outline-none' placeholder='Type Message' name='messageText' value={messageText} onChange={(e) => setMessageText(e.target.value)}>
+                <input type='text' className='placeholder:text-sm bg-gray-100 p-2 rounded-lg flex-1 focus:border-none focus:outline-none' placeholder='Type Message' name='messageText' value={messageText} autoComplete={'off'} onChange={(e) => setMessageText(e.target.value)}>
                 </input>
                 <RiSendPlaneFill onClick={handleSend} className='text-purple-600 mx-2'  size={25}></RiSendPlaneFill>
             </div>
