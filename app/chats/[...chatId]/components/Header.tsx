@@ -11,7 +11,7 @@ export const Header = function ({chat} : {chat: ChatType}) {
     const recipent = useRecipent(chat)
     return (
         <div>
-            <div className="flex justify-between items-center cursor-pointer bg-gray-300 p-3">
+            <div className="flex justify-between items-center cursor-pointer shadow-lg p-3">
                 <div className="m-2">
                 <Avatar src={`${recipent && recipent.image ? recipent.image : '/avatar.png'}`}></Avatar></div>
                 <div className="flex flex-col flex-1 m-2">

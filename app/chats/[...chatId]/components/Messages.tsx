@@ -13,6 +13,7 @@ export const Messages = function ({chat} : {chat : ChatType}) {
     const session = useSession();
     const [messages, setMessages] = useState<Array<MessageType>>(chat.messages);
     useEffect(() => {
+        lastref.current?.scrollIntoView()
         client_socket.subscribe(chatId);
 
         function newMessageCallback(message: MessageType){
@@ -21,7 +22,9 @@ export const Messages = function ({chat} : {chat : ChatType}) {
                     return initialMessages;
                 }
                 return [...initialMessages, message]
-            })
+            });
+            
+            lastref.current?.scrollIntoView()
         }
 
         client_socket.bind('new-message', newMessageCallback)
@@ -29,11 +32,11 @@ export const Messages = function ({chat} : {chat : ChatType}) {
 
     }, [chatId])
     return (
-        <div className="flex flex-col overflow-y-scroll message-section flex-1">
+        <div className="flex flex-col overflow-y-scroll message-section flex-1 custom-anchor">
             {messages.map((message) => {
                 return <Message message={message} />
             })}
-            <div ref={lastref}></div>
+            <div ref={lastref} className="flex-1 m-2"></div>
         </div>
     )
 }

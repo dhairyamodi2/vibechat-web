@@ -41,3 +41,6 @@ body {
    }
 }
 
+.custom-anchor{
+  overflow-anchor: none;
+}

@@ -1,22 +1,29 @@
 'use client'
 import { Input } from '@/app/components/input/Input'
 import { useChat } from '@/app/hooks/useChat'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import  {BsImage} from 'react-icons/bs'
 import { RiSendPlaneFill } from 'react-icons/ri'
 import {toast} from 'react-hot-toast'
 import { http } from '@/app/libs/http'
+
 export const MessageForm =  function () {
     const {chatId} = useChat();
-
+    const lastdiv = useRef<HTMLDivElement>(null)
     const [messageText, setMessageText] = useState('');
+
+    useEffect(() => {
+        lastdiv.current?.scrollIntoView()
+    }, [chatId])
     const handleSend = function () {
         if(messageText.length === 0){
             toast.error("Message can't be empty!")
             return;
         }   
-        alert(chatId)
-        http.post('/api/messages', JSON.stringify({chatId: chatId, body: messageText}))
+        // alert(chatId)
+        http.post('/api/messages', JSON.stringify({chatId: chatId, body: messageText}));
+        
+        setMessageText('');
     }
     return (
         <div className="mt-3 mb-3">
@@ -27,7 +34,7 @@ export const MessageForm =  function () {
                 </input>
                 <RiSendPlaneFill onClick={handleSend} className='text-purple-600 mx-2'  size={25}></RiSendPlaneFill>
             </div>
-            <div className='flex 1'></div>
+            <div className='flex-1' ref={lastdiv}></div>
             </div>
         </div>
     )
