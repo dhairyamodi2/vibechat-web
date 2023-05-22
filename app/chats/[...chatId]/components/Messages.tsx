@@ -29,7 +29,7 @@ export const Messages = function ({chat} : {chat : ChatType}) {
 
     }, [chatId])
     return (
-        <div className="flex flex-col overflow-y-scroll message-section">
+        <div className="flex flex-col overflow-y-scroll message-section flex-1">
             {messages.map((message) => {
                 return <Message message={message} />
             })}
