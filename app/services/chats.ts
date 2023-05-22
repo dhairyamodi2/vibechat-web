@@ -2,7 +2,7 @@ import { Chat, User } from "@prisma/client";
 import { http } from "../libs/http";
 import { ResponseType } from "../types/types";
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
+
 
 export const StartChat = async function (user : User, isGroup: boolean, members: Array<User>, userId: string, name: string | null) {
     try {

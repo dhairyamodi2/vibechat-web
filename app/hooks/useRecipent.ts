@@ -9,13 +9,13 @@ export const useRecipent = function (chats: ChatType) {
     const currentUser = useSession();
     const recipent = useMemo(() => {
         const currentUserMail = currentUser.data?.user?.email;
-        if (!currentUserMail) {
+        if (!currentUserMail && currentUser.status !== 'loading') {
             router.push('/');
             return null;
         }
         const recipent = chats.users.filter((user) => user.email !== currentUserMail)
         return recipent[0]
-    }, [chats, currentUser.data?.user?.email]);;
+    }, [chats, currentUser.data?.user?.email, currentUser.status]);;
     return recipent;
 
 }

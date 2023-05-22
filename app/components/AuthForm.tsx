@@ -11,49 +11,88 @@ import {
     MouseEventHandler, useEffect,
     useState
 } from "react";
-import {AuthPostFields} from "@/app/types/types";
-import {registerUser, signInUser, socialAuth} from "@/app/services/auth";
-import {useSession} from "next-auth/react";
-import {useRouter} from "next/navigation";
+import { AuthPostFields } from "@/app/types/types";
+import { registerUser, signInUser, socialAuth } from "@/app/services/auth";
+import { useSession } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import { Loader } from "./Loader/Loader";
 
 
 export const AuthForm = function () {
+    const session = useSession();
     const [authType, setAuthType] = useState<'login' | 'register'>('login')
     const [loading, setLoading] = useState(false);
     const [postFields, setPostFields] = useState<AuthPostFields>({
-        name : '',
+        name: '',
         email: '',
         password: ''
     })
-    function handleChange(e : ChangeEvent<HTMLInputElement>){
+    function handleChange(e: ChangeEvent<HTMLInputElement>) {
         setPostFields((prevState) => {
             return {
                 ...prevState,
-                [e.target.name] : e.target.value
+                [e.target.name]: e.target.value
             }
         })
     }
 
-    const handleSign : FormEventHandler<HTMLFormElement> = async function(e) {
+    const handleSign: FormEventHandler<HTMLFormElement> = async function (e) {
         e.preventDefault();
-        if(authType === 'register') {
+        if (authType === 'register') {
             await registerUser(postFields, setLoading);
         }
-        if(authType === 'login') {
+        if (authType === 'login') {
             await signInUser(postFields, setLoading);
         }
     }
 
-    const handleGithub = function() {
+    const handleGithub = function () {
         socialAuth('github')
     }
 
-    const handleGoogle = function() {
+    const handleGoogle = function () {
         socialAuth('google')
     }
 
+    const router = useRouter();
+    const [customLoader, setLoader] = useState(session.status === 'loading');
+    const pathname = usePathname();
+    useEffect(() => {
+        
+        if(session.status === 'authenticated') {
+            router.replace('/chats');
+        }
+        if(session.status === 'unauthenticated'){
+            setLoader(false);
+        }
+    }, [session])
+
+    useEffect(() => {
+        if(pathname === 'chats'){
+            alert('working cool')
+            setLoader(false);
+        }
+    }, [pathname])
     return (
-        <div className="sm : mx-auto sm: w-full sm : max-w-md mt-6 ">
+        <div>
+            {customLoader ? <Loader /> : 
+            <div>
+                <div
+                className="
+           sm:mx-auto
+           sm:w-full
+           sm:max-w-md
+           " // why
+            >
+                <Link href={'/'}><Image alt="logo" width={52} height={52} className="mx-auto w-auto" src={'/vibechat.png'} /></Link>
+
+                <h2 className="mt-3 text-center text-2xl font-bold">
+                    Sign in to your account
+                </h2>
+            </div>
+            <div className="sm : mx-auto sm: w-full sm : max-w-md mt-6 ">
 
                 <div
                     className="
@@ -97,7 +136,7 @@ export const AuthForm = function () {
                             required={true}
                             leftIcon={<RiLockPasswordLine />}
                         />
-                        <Button onClick={()=> {}} fullwidth={true} disabled={loading}>{loading ? "Loading..." : authType == 'login' ? 'Sign In' : 'Sign Out'}</Button>
+                        <Button onClick={() => { }} fullwidth={true} disabled={loading}>{loading ? "Loading..." : authType == 'login' ? 'Sign In' : 'Sign Out'}</Button>
                     </form>
                     <div className="mt-5">
                         <div className="relative">
@@ -122,7 +161,7 @@ export const AuthForm = function () {
                             {authType === 'login' ? 'New to Vibechat?' : 'Already have an account?'}
                         </div>
                         <div onClick={() => {
-                            if(authType === 'login') {
+                            if (authType === 'login') {
                                 setAuthType('register')
                             }
                             else {
@@ -136,6 +175,11 @@ export const AuthForm = function () {
                 </div>
 
 
+            </div>
+            </div>
+            }
+            
         </div>
+
     );
 };
