@@ -10,7 +10,9 @@ html, body, :root {
 body::-webkit-scrollbar, .message-section::-webkit-scrollbar {
   display: none;
 }
-
+.messages {
+  max-height: 100dvh;
+}
 body {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
