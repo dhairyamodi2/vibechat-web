@@ -43,7 +43,7 @@ export async function POST(req : Request) {
             }
         });
 
-        console.log(newMessage)
+        // console.log(newMessage)
         const updatedChat = await OrmClient.chat.update({
             where: {
                 id : chatId
@@ -65,7 +65,7 @@ export async function POST(req : Request) {
                 }
             }
         })
-        console.log(updatedChat);
+        // console.log(updatedChat);
         await server_socket.trigger(chatId, 'new-message', newMessage);
 
 
