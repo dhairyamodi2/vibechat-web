@@ -136,7 +136,7 @@ export const AuthForm = function () {
                             required={true}
                             leftIcon={<RiLockPasswordLine />}
                         />
-                        <Button onClick={() => { }} fullwidth={true} disabled={loading}>{loading ? "Loading..." : authType == 'login' ? 'Sign In' : 'Sign Out'}</Button>
+                        <Button onClick={() => { }} fullwidth={true} disabled={loading}>{loading ? "Loading..." : authType == 'login' ? 'Sign In' : 'Sign Up'}</Button>
                     </form>
                     <div className="mt-5">
                         <div className="relative">

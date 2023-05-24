@@ -78,7 +78,7 @@ export const ChatList = function ({chats} : {chats?: ChatType[]}) {
         <div className={`flex flex-col overflow-y-scroll message-section ${chatId.length != 0 ? 'm-0 sm:m-3' : 'sm:m-3'}`}>
             {initialChats.length === 0 && loader && <Loader />}
              {initialChats.map((chat) => {
-                return <ChatBox chat = {chat} lastMessage={chat.id === initialChats[initialChats.length - 1].id}/>
+                return <ChatBox chat = {chat} key={chat.id} lastMessage={chat.id === initialChats[initialChats.length - 1].id}/>
             })}
             
              

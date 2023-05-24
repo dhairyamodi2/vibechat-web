@@ -67,7 +67,7 @@ export const Messages = function ({chat} : {chat : ChatType}) {
     return (
         <div className="flex flex-col overflow-y-auto message-section flex-1 custom-anchor" ref={entirediv}>
             {messages.map((message) => {
-                return <Message message={message} lastMessage={messages.length > 0 && messages[messages.length - 1].id === message.id ? true : false} chat={chat} seen={message.seenIds.indexOf(recipent ? recipent.id : 'something') !== -1}/>
+                return <Message message={message} lastMessage={messages.length > 0 && messages[messages.length - 1].id === message.id ? true : false} chat={chat} key={message.id} seen={message.seenIds.indexOf(recipent ? recipent.id : 'something') !== -1}/>
             })}
             <div ref={lastref} className="flex-1 p-16"></div>
         </div>
