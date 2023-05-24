@@ -37,6 +37,10 @@ export const Messages = function ({chat} : {chat : ChatType}) {
 
         client_socket.bind('new-message', newMessageCallback)
 
+        return () => {
+            client_socket.unsubscribe(chatId);
+            client_socket.unbind('new-message', newMessageCallback);
+        }
 
     }, [chatId])
     return (

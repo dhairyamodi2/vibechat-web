@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
 import { client_socket } from "@/app/libs/sockets";
+import { toast } from "react-hot-toast";
 
 export const ChatList = function ({chats} : {chats: ChatType[]}) {
     const {chatId} = useChat();
@@ -33,7 +34,17 @@ export const ChatList = function ({chats} : {chats: ChatType[]}) {
                 })
             })
         }
+
+        function deletedCallback(deletedChat : ChatType) {
+            // toast.success('Deleted Chat');
+            router.replace('/chats');
+            setInitialChat((chats) => {
+                return [...chats.filter((chat) => chat.id !== deletedChat.id)]
+            })
+        }
         client_socket.bind('chat-updated', updateCallback);
+        client_socket.bind('chat-deleted', deletedCallback);
+
     }, [channel, router])
     return (
         <div className={`flex flex-col overflow-y-scroll message-section ${chatId.length != 0 ? 'm-0 sm:m-3' : 'sm:m-3'}`}>

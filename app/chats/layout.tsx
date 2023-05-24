@@ -10,6 +10,7 @@ export default async function ChatLayout({children} : {children : ReactNode}){
     return (
         <div className={`h-full grid md:grid-cols-9 lg:grid-cols-7`}>
         <div className="md:col-span-3 lg:col-span-2 h-full">
+            {/* @ts-ignore */}
         <Sidebar>
             <ChatList chats={chats}/>
         </Sidebar>
