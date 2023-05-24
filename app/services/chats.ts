@@ -1,6 +1,6 @@
 import { Chat, User } from "@prisma/client";
 import { http } from "../libs/http";
-import { ResponseType } from "../types/types";
+import { ChatType, ResponseType } from "../types/types";
 import { toast } from "react-hot-toast";
 
 
@@ -24,3 +24,30 @@ export const StartChat = async function (user : User, isGroup: boolean, members:
 }
 
 
+export const getChats = async function () {
+    try {
+        const {data, status} = await http.get<ResponseType<Array<ChatType>>>('/api/chat');
+        if(data.success === true) {
+            return data.data;
+        }
+        return []
+    } catch (error) {
+        return []
+    }
+}
+
+
+export const getChatById = async function(chatId: string | undefined | null) {
+    try {
+        if(!chatId) {
+            return null ;
+        }
+        const {data,status} = await http.get<ResponseType<ChatType>>(`/api/chat/${chatId}`);
+        if(data.success === true && data.data) {
+            return data.data
+        }
+        return null
+    } catch (error) {
+        return null
+    }
+}

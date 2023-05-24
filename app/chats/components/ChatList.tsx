@@ -1,5 +1,4 @@
 'use client'
-import { getChats } from "@/app/services/server-side/getChats";
 import { ChatBox } from "./Chat";
 import { ChatType } from "@/app/types/types";
 import { useChat } from "@/app/hooks/useChat";
@@ -9,10 +8,29 @@ import { useSession } from "next-auth/react";
 import { client_socket } from "@/app/libs/sockets";
 import { toast } from "react-hot-toast";
 import Method from 'lodash';
-export const ChatList = function ({chats} : {chats: ChatType[]}) {
+import { getChats } from "@/app/services/chats";
+import { Loader } from "@/app/components/Loader/Loader";
+export const ChatList = function ({chats} : {chats?: ChatType[]}) {
+
+   
     const {chatId} = useChat();
+
     const router = useRouter();
-    const [initialChats, setInitialChat] = useState(chats)
+    const [initialChats, setInitialChat] = useState<Array<ChatType>>([])
+    const [loader, setLoader] = useState(false);
+    useEffect(() => {
+        async function x() {
+            setLoader(true);
+            const res = await getChats();
+            setInitialChat((prevState) => {
+                if(res != undefined && res.length !== 0) return res;
+                return prevState;
+            })
+            setLoader(false);
+            // toast.success('loaded');
+        }
+        x();
+    }, [chatId])
     const session = useSession();
     const channel = useMemo(() => {
         return session.data?.user?.email
@@ -58,8 +76,9 @@ export const ChatList = function ({chats} : {chats: ChatType[]}) {
     }, [channel, router])
     return (
         <div className={`flex flex-col overflow-y-scroll message-section ${chatId.length != 0 ? 'm-0 sm:m-3' : 'sm:m-3'}`}>
+            {initialChats.length === 0 && loader && <Loader />}
              {initialChats.map((chat) => {
-                return <ChatBox chat = {chat} lastMessage={chat.id === chats[initialChats.length - 1].id}/>
+                return <ChatBox chat = {chat} lastMessage={chat.id === initialChats[initialChats.length - 1].id}/>
             })}
             
              

@@ -1,14 +1,36 @@
-import { getChatsById } from "@/app/services/server-side/getChatsById";
+'use client'
 import Image from "next/image";
 import { Header } from "./components/Header";
 import { Messages } from "./components/Messages";
 import { MessageForm } from "./components/MessageForm";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { getMessages } from "@/app/services/server-side/getMessages";
+import { useParams } from "next/navigation";
+import { getChatById } from "@/app/services/chats";
+import { ChatType } from "@/app/types/types";
+import { Loader } from "@/app/components/Loader/Loader";
 
 
-export default async function Chat({params} : {params : {chatId: Array<string>}}) {
-    console.log(params.chatId);
-    const chat = await getChatsById(params.chatId);
+export default function Chat() {
+    const params = useParams() as {chatId : string};
+    const [loader, setLoader] = useState(false);
+    const [chat, setChat] = useState<ChatType | null>(null);
+    useEffect(() => {
+        // alert(JSON.stringify(params));
+        async function x() {
+            setLoader(true);
+            const res = await getChatById(params.chatId);
+            if(res) {
+                setChat(res);
+            }
+            setLoader(false);
+        }
+        x();
+    }, [params.chatId])
+
+    if(loader) {
+        return <Loader />
+    }
     if(!chat) {
         return (
             <div className="h-full sm:hidden md:block border-l-2">

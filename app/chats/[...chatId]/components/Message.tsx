@@ -1,13 +1,14 @@
 'use client'
 import { Avatar } from "@/app/components/chat/Avatar";
-import { MessageType } from "@/app/types/types";
+import { ChatType, MessageType } from "@/app/types/types";
 import { useSession } from "next-auth/react";
 import { format } from 'date-fns';
 import { IoCheckmarkDoneSharp } from 'react-icons/io5'
-export const Message = function ({ message }: { message: MessageType }) {
+import { useRecipent } from "@/app/hooks/useRecipent";
+export const Message = function ({ message, lastMessage, chat }: { message: MessageType, lastMessage: boolean, chat: ChatType }) {
     const session = useSession();
 
-
+    const recipent = useRecipent(chat);
     return (
         <div className="px-4 pt-3 sm:pb-4">
             <div className="relative">
@@ -25,21 +26,24 @@ export const Message = function ({ message }: { message: MessageType }) {
                         </div>
                         <div className={`${session.data?.user?.email === message.sender.email ? 'bg-purple-600 text-white' : 'bg-gray-200'}  px-3 py-2 my-2 ml-2 rounded-lg flex justify-start items-end max-w-xs md:max-w-sm w-auto text-md break-all custom-max-width relative`}>
                             <span>{message.body}</span>
-                            {session.data?.user?.email === message.sender.email &&
-                                <div className="text-xs h-full pl-1">
-                                   <IoCheckmarkDoneSharp className="text-md text-white" />
-                                </div>
 
-                            }
+                        </div>
+                        {session.data?.user?.email === message.sender.email &&
+                        <div className={`text-xs h-full pl-1 ${lastMessage && message.seenIds.indexOf(recipent ? recipent.id : 'null') !== -1 ? 'visible' : 'invisible'}`}>
+                            <span>Seen</span>
                         </div>
 
+                    }
+
                     </div>
+        
                     {session.data?.user?.email === message.sender.email &&
                         <div className="">
                             <Avatar src="/avatar.png" width={40} height={40}></Avatar>
                         </div>
-
                     }
+                   
+            
 
                 </div>
 

@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/app/services/server-side/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from '@/app/libs/ormconfig';
 import { server_socket } from "@/app/libs/sockets";
+import OrmClient from "@/app/libs/ormconfig";
 
 export async function POST(req : Request){
     try {
@@ -88,6 +89,47 @@ export async function POST(req : Request){
 
     } catch (error) {
         console.log(error + 'coming from new chat');
+        return NextResponse.json({
+            success: false,
+            message: "internal server error",
+            data: null
+        })
+    }
+}
+export async function GET(req : Request) {
+    try {
+        const currentUser = await getCurrentUser();
+        if(!currentUser || !currentUser.id) {
+            return NextResponse.json({
+                success: false,
+                message: 'Unauthorized',
+                data: null
+            })
+        }
+
+        const chats = await OrmClient.chat.findMany({
+            where: {
+                userIds: {
+                    has: currentUser.id
+                }
+            },
+            include: {
+                users: true,
+                messages: {
+                    include: {
+                        sender: true,
+                        seen: true
+                    }
+                }
+            }
+        })
+        return NextResponse.json({
+            success: true,
+            message: '',
+            data: chats
+        })
+    } catch (error) {
+        console.log(error + 'coming from chats');
         return NextResponse.json({
             success: false,
             message: "internal server error",

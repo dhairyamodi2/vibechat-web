@@ -4,7 +4,63 @@ import { getCurrentUser } from "@/app/services/server-side/getCurrentUser";
 import { NextResponse } from "next/server";
 
 interface Params {
-    chatId? : Array<string>
+    chatId? : string
+}
+
+
+export async function GET(req : Request, {params} : {params : Params}) {
+    try {
+        const {chatId} = params;
+        console.log('inside get');
+        console.log(chatId);
+        const currentUser = await getCurrentUser();
+        if(!currentUser || !currentUser.email) {
+            return NextResponse.json({
+                success: false,
+                message: '',
+                data: null
+            })
+        }
+        // console.log(currentUser)
+        if(!chatId) {
+            return NextResponse.json({
+                success: false,
+                message: '',
+                data: null
+            })
+        }
+        const chat = await OrmClient.chat.findUnique({
+            where: {
+                id: chatId
+            },
+            include: {
+                users: true,
+                messages: {
+                    include: {
+                        seen: true,
+                        sender: true
+                    },
+                    orderBy: {
+                        createdAt: 'asc'
+                    }
+                },
+                
+            }
+        });
+
+        return NextResponse.json({
+            success: true,
+            message: "",
+            data: chat
+        })
+    } catch (error) {
+        console.log(error + 'from chat by id');
+        return NextResponse.json({
+            success: false,
+            message: 'Internal Server error',
+            data: null
+        })  
+    }
 }
 export async function DELETE(req : Request, {params} : {params : Params}) {
     try {
@@ -16,13 +72,13 @@ export async function DELETE(req : Request, {params} : {params : Params}) {
         }
 
 
-        if(!chatId || chatId.length === 0 ){
+        if(!chatId){
             return NextResponse.json({success: false, message: '', data: null})
         }  
 
         const chat = await OrmClient.chat.findUnique({
             where: {
-                id: chatId[0]
+                id: chatId
             },
             include: {
                 users: true
