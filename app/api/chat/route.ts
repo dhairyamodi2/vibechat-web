@@ -2,6 +2,7 @@ import { NewChat } from "@/app/libs/typeGuards";
 import { getCurrentUser } from "@/app/services/server-side/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from '@/app/libs/ormconfig';
+import { server_socket } from "@/app/libs/sockets";
 
 export async function POST(req : Request){
     try {
@@ -57,8 +58,18 @@ export async function POST(req : Request){
                     }
                 },
                 include: {
-
-                    users: true
+                    users: true,
+                    messages: {
+                        include: {
+                            seen: true,
+                            sender: true
+                        }
+                    }
+                }
+            })
+            newChat.users.map((user) =>{
+                if(user.email) {
+                    server_socket.trigger(user.email, 'chat-created', newChat)
                 }
             })
             return NextResponse.json({

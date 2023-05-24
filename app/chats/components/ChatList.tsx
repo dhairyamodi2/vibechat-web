@@ -8,7 +8,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
 import { client_socket } from "@/app/libs/sockets";
 import { toast } from "react-hot-toast";
-
+import Method from 'lodash';
 export const ChatList = function ({chats} : {chats: ChatType[]}) {
     const {chatId} = useChat();
     const router = useRouter();
@@ -42,8 +42,18 @@ export const ChatList = function ({chats} : {chats: ChatType[]}) {
                 return [...chats.filter((chat) => chat.id !== deletedChat.id)]
             })
         }
+
+        function createdCallback(newChat : ChatType) {
+            setInitialChat((exisitingchats) => {
+                if(Method.find(exisitingchats, {id: newChat.id})){
+                    return exisitingchats
+                }
+                return [newChat, ...exisitingchats]
+            })
+        }
         client_socket.bind('chat-updated', updateCallback);
         client_socket.bind('chat-deleted', deletedCallback);
+        client_socket.bind('chat-created', createdCallback);
 
     }, [channel, router])
     return (
