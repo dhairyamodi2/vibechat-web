@@ -9,12 +9,17 @@ import { client_socket } from "@/app/libs/sockets"
 import Methods, { update } from 'lodash'
 import { useRouter } from "next/navigation"
 import { http } from "@/app/libs/http"
+import { useRecipent } from "@/app/hooks/useRecipent"
+import { toast } from "react-hot-toast"
 export const Messages = function ({chat} : {chat : ChatType}) {
     const lastref = useRef<HTMLDivElement>(null)
     const {chatId} = useChat()
     const session = useSession();
     const router = useRouter()
     const entirediv = useRef<HTMLDivElement>(null)
+
+    const recipent = useRecipent(chat);
+
     const [messages, setMessages] = useState<Array<MessageType>>(chat.messages);
     useEffect(() => {
 
@@ -24,6 +29,7 @@ export const Messages = function ({chat} : {chat : ChatType}) {
         client_socket.subscribe(chatId);
 
         function newMessageCallback(message: MessageType){
+            http.put(`/api/chat/${chatId}/seen`);
             setMessages((initialMessages) => {
                 if(Methods.find(initialMessages, {id: message.id})){
                     return initialMessages;
@@ -41,11 +47,11 @@ export const Messages = function ({chat} : {chat : ChatType}) {
 
         function updatedMessageCallback(message: MessageType) {
             setMessages((initialMessages) => {
-                return initialMessages.map((initialMessages) => {
-                    if(initialMessages.id === message.id) {
+                return initialMessages.map((initialMessags) => {
+                    if(initialMessags.id === message.id) {
                         return message;
                     }
-                    return initialMessages
+                    return initialMessags
                 })
             })
         }
@@ -60,7 +66,7 @@ export const Messages = function ({chat} : {chat : ChatType}) {
     return (
         <div className="flex flex-col overflow-y-auto message-section flex-1 custom-anchor" ref={entirediv}>
             {messages.map((message) => {
-                return <Message message={message} lastMessage={messages.length > 0 && messages[messages.length - 1].id === message.id ? true : false} chat={chat}/>
+                return <Message message={message} lastMessage={messages.length > 0 && messages[messages.length - 1].id === message.id ? true : false} chat={chat} seen={message.seenIds.indexOf(recipent ? recipent.id : 'something') !== -1}/>
             })}
             <div ref={lastref} className="flex-1 p-16"></div>
         </div>

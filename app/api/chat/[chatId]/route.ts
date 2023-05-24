@@ -91,7 +91,7 @@ export async function DELETE(req : Request, {params} : {params : Params}) {
 
         const deletedChat = await OrmClient.chat.deleteMany({
             where: {
-                id: chatId[0],
+                id: chatId,
                 userIds: {
                     hasSome: [currentUser.id]
                 }

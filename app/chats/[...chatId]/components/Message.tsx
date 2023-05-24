@@ -5,10 +5,13 @@ import { useSession } from "next-auth/react";
 import { format } from 'date-fns';
 import { IoCheckmarkDoneSharp } from 'react-icons/io5'
 import { useRecipent } from "@/app/hooks/useRecipent";
-export const Message = function ({ message, lastMessage, chat }: { message: MessageType, lastMessage: boolean, chat: ChatType }) {
+import { useEffect } from "react";
+import { toast } from "react-hot-toast";
+export const Message = function ({ message, lastMessage, chat, seen }: { message: MessageType, lastMessage: boolean, chat: ChatType, seen: boolean }) {
     const session = useSession();
 
     const recipent = useRecipent(chat);
+
     return (
         <div className="px-4 pt-3 sm:pb-4">
             <div className="relative">
@@ -29,7 +32,7 @@ export const Message = function ({ message, lastMessage, chat }: { message: Mess
 
                         </div>
                         {session.data?.user?.email === message.sender.email &&
-                        <div className={`text-xs h-full pl-1 ${lastMessage && message.seenIds.indexOf(recipent ? recipent.id : 'null') !== -1 ? 'visible' : 'invisible'}`}>
+                        <div className={`text-xs h-full pl-1 ${lastMessage && seen ? 'visible' : 'invisible'}`}>
                             <span>Seen</span>
                         </div>
 
