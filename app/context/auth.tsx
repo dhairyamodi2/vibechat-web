@@ -2,10 +2,10 @@
 import {SessionProvider} from "next-auth/react";
 import {ReactNode} from "react";
 
-export const AuthProvider = function ({...children}) {
+export const AuthProvider = function ({children} : {children : ReactNode}) {
     return (
         <SessionProvider>
-            {children.children}
+            {children}
         </SessionProvider>
     )
 }
