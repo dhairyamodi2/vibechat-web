@@ -3,6 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import { Button } from '../input/Button'
 import { User } from '@prisma/client'
+import { signOut } from 'next-auth/react'
 
 
 export function Modal({isOpen, closeModal, user} : {isOpen : boolean, closeModal: () => void, user: User | null}) {
@@ -46,8 +47,9 @@ export function Modal({isOpen, closeModal, user} : {isOpen : boolean, closeModal
                     <Profile user={user}/>
                   </div>
 
-                  <div className="mt-4 flex justify-center border-t-slate-200 border-t-2">
+                  <div className="mt-4 flex justify-between border-t-slate-200 border-t-2">
                     <Button onClick={() => {closeModal()}}>Close</Button>
+                    <Button onClick={() => {signOut()}}>Logout</Button>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

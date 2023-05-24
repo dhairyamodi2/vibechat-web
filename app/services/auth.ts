@@ -11,6 +11,7 @@ export const registerUser = async function(postFields : AuthPostFields, setLoadi
         const {data, status} = await http.post<ResponseType<any>>('/api/register', JSON.stringify(postFields))
         if(data.success === true){
             toast.success("Registered Successfully!");
+            await signIn('credentials', {email: postFields.email, password: postFields.password, redirect: false});
             return;
         }
         else {
@@ -29,7 +30,6 @@ export const signInUser = async function(postFields : AuthPostFields, setLoading
     setLoading(true);
     try {
         const payload = await signIn('credentials', {email: postFields.email, password: postFields.password, redirect: false});
-        alert(JSON.stringify(payload))
         if(payload?.error){
             toast.error('Invalid Credentials');
             // return;

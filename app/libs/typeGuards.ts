@@ -5,7 +5,7 @@ export function isValidBody<T extends Record<string, unknown>>(
     fields: (keyof T)[],
     message: Array<string>
 ): body is T {
-    console.log(body);
+    
     let bodyKeys : Array<string> = Object.keys(body);
 
     fields.forEach((field) => {

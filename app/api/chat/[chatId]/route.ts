@@ -11,7 +11,7 @@ interface Params {
 export async function GET(req : Request, {params} : {params : Params}) {
     try {
         const {chatId} = params;
-        console.log('inside get');
+        
         console.log(chatId);
         const currentUser = await getCurrentUser();
         if(!currentUser || !currentUser.email) {

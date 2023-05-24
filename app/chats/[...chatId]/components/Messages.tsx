@@ -58,11 +58,12 @@ export const Messages = function ({chat} : {chat : ChatType}) {
         client_socket.bind('new-message', newMessageCallback)
         client_socket.bind('message-updated', updatedMessageCallback);
         return () => {
-            // client_socket.unsubscribe(chatId);
-            // client_socket.unbind('new-message', newMessageCallback);
+            client_socket.unsubscribe(chatId);
+            client_socket.unbind('new-message', newMessageCallback);
+            client_socket.unbind('message-updated', updatedMessageCallback);
         }
 
-    }, [chatId, router])
+    }, [chatId])
     return (
         <div className="flex flex-col overflow-y-auto message-section flex-1 custom-anchor" ref={entirediv}>
             {messages.map((message) => {

@@ -12,7 +12,6 @@ export const ConfirmDelete = function ({ chatId, isOpen, closeModal }: { chatId:
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     async function confirmDelete(){
-        alert(chatId);
         setLoading(true);
         try {
             const {data, status} = await http.delete<ResponseType<ChatType>>(`/api/chat/${chatId}`);

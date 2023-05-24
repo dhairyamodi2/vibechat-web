@@ -162,10 +162,12 @@ export const AuthForm = function () {
                         </div>
                         <div onClick={() => {
                             if (authType === 'login') {
-                                setAuthType('register')
+                                setAuthType('register');
+                                setPostFields({email: '', name: '', password: ''});
                             }
                             else {
                                 setAuthType('login')
+                                setPostFields({email: '', name: '', password: ''});
                             }
                         }} className="cursor-pointer underline px-1">
                             {authType === 'login' ? 'Create Account' : 'Login'}

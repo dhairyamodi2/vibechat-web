@@ -47,7 +47,7 @@ export async function POST(
             data: user
         }, {status: 201})
     } catch (e) {
-        console.log(typeof e)
+      
         if ((e as any).code != undefined && (e as any).code === 'P2002'){
             return NextResponse.json({
                 success: false,

@@ -71,7 +71,7 @@ export async function PUT (req : Request, {params} : {params : Params} ) {
                 }
             }
         })
-        console.log(updatedMessage);
+       
         await server_socket.trigger(chat.id, 'message-updated', updatedMessage);
         return NextResponse.json({
             success: true,
