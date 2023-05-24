@@ -7,11 +7,14 @@ import { ChatType } from "@/app/types/types"
 import Image from "next/image"
 import { useState } from "react"
 import {RiChatDeleteFill} from 'react-icons/ri'
+import  {IoIosArrowBack} from 'react-icons/io'
+import { useRouter } from "next/navigation"
 
 
 export const Header = function ({chat} : {chat: ChatType}) {
     const recipent = useRecipent(chat)
 
+    const router = useRouter();
     const [open, setOpen] = useState(false);
     function closeModal () {
         setOpen(false);
@@ -19,7 +22,9 @@ export const Header = function ({chat} : {chat: ChatType}) {
     return (
         <div>
             <div className="flex justify-between items-center cursor-pointer shadow-lg p-3">
+            <IoIosArrowBack className="text-xl" onClick={() => {router.push('/chats')}} />
                 <div className="m-2">
+                
                 <Avatar src={`${recipent && recipent.image ? recipent.image : '/avatar.png'}`}></Avatar></div>
                 <div className="flex flex-col flex-1 m-2">
                     <span className="font-bold">{recipent && recipent.name ? recipent.name : chat.name}</span>

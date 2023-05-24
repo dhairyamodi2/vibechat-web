@@ -30,7 +30,9 @@ export const MessageForm =  function () {
         <div className="mt-4 mb-3">
             <div className='flex flex-col'>
             <div className="flex items-center justify-between text-xl">
-                <BsImage className='text-purple-600 mx-2' size={25}></BsImage>
+                <BsImage className='text-purple-600 mx-2' size={25} onClick={() => {
+                    toast.error('This functionality is yet to be implemented', {position: 'bottom-center', duration: 3000 })
+                }}></BsImage>
                 <form className='flex w-full' onSubmit={handleSend}>
                 <input type='text' className='placeholder:text-sm bg-gray-100 p-2 rounded-lg flex-1 focus:border-none focus:outline-none flex-1' placeholder='Type Message' name='messageText' value={messageText} autoComplete={'off'} onChange={(e) => setMessageText(e.target.value)}>
                 </input>

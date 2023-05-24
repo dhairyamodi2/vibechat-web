@@ -2,15 +2,15 @@
 import { Avatar } from "@/app/components/chat/Avatar";
 import { MessageType } from "@/app/types/types";
 import { useSession } from "next-auth/react";
-import {format} from 'date-fns';
-
+import { format } from 'date-fns';
+import { IoCheckmarkDoneSharp } from 'react-icons/io5'
 export const Message = function ({ message }: { message: MessageType }) {
     const session = useSession();
 
-    
+
     return (
         <div className="px-4 pt-3 sm:pb-4">
-            <div className="">
+            <div className="relative">
                 <div className={`flex items-start ${session.data?.user?.email === message.sender.email ? 'justify-end' : ''}`}>
                     {session.data?.user?.email !== message.sender.email &&
                         <div className="">
@@ -23,8 +23,14 @@ export const Message = function ({ message }: { message: MessageType }) {
                             <span className="font-bold text-md">{message.sender.name}</span>
                             <span className="text-sm px-2">{format(new Date(message.createdAt), 'p')}</span>
                         </div>
-                        <div className={`${session.data?.user?.email === message.sender.email ? 'bg-purple-600 text-white' : 'bg-gray-200'}  p-4 my-2 ml-2 rounded-2xl flex justify-start items-end max-w-xs md:max-w-sm w-auto text-md break-all custom-max-width`}>
-                            {message.body}
+                        <div className={`${session.data?.user?.email === message.sender.email ? 'bg-purple-600 text-white' : 'bg-gray-200'}  px-3 py-2 my-2 ml-2 rounded-lg flex justify-start items-end max-w-xs md:max-w-sm w-auto text-md break-all custom-max-width relative`}>
+                            <span>{message.body}</span>
+                            {session.data?.user?.email === message.sender.email &&
+                                <div className="text-xs h-full pl-1">
+                                   <IoCheckmarkDoneSharp className="text-md text-white" />
+                                </div>
+
+                            }
                         </div>
 
                     </div>
@@ -32,8 +38,12 @@ export const Message = function ({ message }: { message: MessageType }) {
                         <div className="">
                             <Avatar src="/avatar.png" width={40} height={40}></Avatar>
                         </div>
+
                     }
+
                 </div>
+
+
 
             </div>
         </div>
