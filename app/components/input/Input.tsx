@@ -22,7 +22,7 @@ interface InputProps {
 }
 
 export const Input : React.FC<InputProps> = function (
-    {label, required, disabled, name, onChange, id, type, leftIcon}
+    {label, required, disabled, name, onChange, id, type, leftIcon, value}
 ){
     return (
         <div className="w-full mb-2 text-lg mt-6" >
@@ -45,7 +45,7 @@ export const Input : React.FC<InputProps> = function (
                 focus:ring-2
                 sm: text-sm
                 focus:ring-purple-400' 
-                type={type} name={name} onChange={onChange} placeholder={label} required={required}>
+                type={type} name={name} value={value} onChange={onChange} placeholder={label} required={required}>
             </input>
         </div>
     )

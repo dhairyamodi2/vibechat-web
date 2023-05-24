@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image";
-import { AuthForm } from "./components/AuthForm";
+import { AuthForm } from "./components/auth/AuthForm";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";

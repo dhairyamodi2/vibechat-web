@@ -23,7 +23,7 @@ export const Message = function ({ message }: { message: MessageType }) {
                             <span className="font-bold text-md">{message.sender.name}</span>
                             <span className="text-sm px-2">{format(new Date(message.createdAt), 'p')}</span>
                         </div>
-                        <div className={`${session.data?.user?.email === message.sender.email ? 'bg-purple-600 text-white' : 'bg-gray-200'}  p-4 my-2 ml-2 rounded-2xl flex justify-start items-end max-w-xs md:max-w-sm w-auto text-md break-all`}>
+                        <div className={`${session.data?.user?.email === message.sender.email ? 'bg-purple-600 text-white' : 'bg-gray-200'}  p-4 my-2 ml-2 rounded-2xl flex justify-start items-end max-w-xs md:max-w-sm w-auto text-md break-all custom-max-width`}>
                             {message.body}
                         </div>
 

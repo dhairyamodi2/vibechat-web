@@ -17,9 +17,7 @@ export const Messages = function ({chat} : {chat : ChatType}) {
     const [messages, setMessages] = useState<Array<MessageType>>(chat.messages);
     useEffect(() => {
         // alert(entirediv.current?.scrollHeight);
-        if(lastref.current && entirediv.current) {
-            entirediv.current.scrollTo({left:0, top: 2100})
-        }
+        lastref.current?.scrollIntoView()
         client_socket.subscribe(chatId);
 
         function newMessageCallback(message: MessageType){

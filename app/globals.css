@@ -44,3 +44,14 @@ body {
 .custom-anchor{
   overflow-anchor: none;
 }
+
+@media screen and (min-width: 320px) {
+  .custom-max-width{
+    max-width: 14rem;
+  }
+}
+
+
+.image {
+  border-radius: 50%;
+}

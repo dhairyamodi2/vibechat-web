@@ -2,9 +2,9 @@
 
 import { AiOutlineMail, AiFillGithub, AiFillGoogleCircle, AiFillFacebook, AiOutlineUser } from "react-icons/ai";
 import { RiLockPasswordLine } from 'react-icons/ri'
-import { Input } from "./input/Input";
-import { Button } from "./input/Button";
-import { SocialButtons } from "./auth/SocialButtons";
+import { Input } from "../input/Input";
+import { Button } from "../input/Button";
+import { SocialButtons } from "./SocialButtons";
 import {
     ChangeEvent,
     FormEventHandler,
@@ -17,7 +17,7 @@ import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Loader } from "./Loader/Loader";
+import { Loader } from "../Loader/Loader";
 
 
 export const AuthForm = function () {

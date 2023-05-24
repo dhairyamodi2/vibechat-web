@@ -20,24 +20,25 @@ export const ChatList = function ({chats} : {chats: ChatType[]}) {
     useEffect(() => {
         if(!channel) return;
         client_socket.subscribe(channel);
-
         function updateCallback(chat : ChatType) {
             setInitialChat((chats) => {
                 return chats.map((prev_chat) => {
                     if(prev_chat.id == chat.id) {
                         return {
                             ...prev_chat,
-                            messages: [chat.me]
+                            messages: chat.messages
                         }
                     }
+                    return prev_chat
                 })
             })
         }
+        client_socket.bind('chat-updated', updateCallback);
     }, [channel, router])
     return (
         <div className={`flex flex-col overflow-y-scroll message-section ${chatId.length != 0 ? 'm-0 sm:m-3' : 'sm:m-3'}`}>
-             {chats.map((chat) => {
-                return <ChatBox chat = {chat}/>
+             {initialChats.map((chat) => {
+                return <ChatBox chat = {chat} lastMessage={chat.id === chats[initialChats.length - 1].id}/>
             })}
             
              
