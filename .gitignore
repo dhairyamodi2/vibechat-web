@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 
+/.env.production
+
 /.idea
 /.env
 # testing
